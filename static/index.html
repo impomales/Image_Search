@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <title>Image Search</title>
+        <link rel='stylesheet' type='text/css' href='index.css'>
+    </head>
+    <body>
+        <h1>Image Search Abstraction</h1>
+        <ul>
+            <li>
+                <p>Gets the image URLs, alt text and page urls for a set of images relating to a given search string.</p>
+            </li>
+            <li>
+                <p>Paginate through the responses by adding a ?offset=2 parameter to the URL.</p>
+            </li>
+            <li>
+                <p>Returns a list of the most recently submitted search strings.</p>
+            </li>
+        </ul>
+        <h2>Example usage:</h2>
+        <div class='example'>
+            <p>https://url.com/lolcats</p>
+        </div>
+        <h2>Example result:</h2>
+        <div class='example'>
+            <p>[{</p>
+            <p>
+                url: "https://i.ytimg.com/vi/6HA2D3LsJQs/hqdefault.jpg",
+            </p>
+            <p>
+                snippet: "LOLCATS",
+            </p>
+            <p>
+                thumbnail: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRSabL0zDCkhq09g00l8pikW2NB6tMXGe9TKoNYf96U-J36SmNOgTa1n8M",
+            </p>
+            <p>
+                context: "https://www.youtube.com/watch?v=6HA2D3LsJQs"
+            </p>
+            <p>
+                }]
+            </p>
+        </div>
+        <h2>Example usage:</h2>
+        <div class='example'>
+            <p>https://url.com/latest</p>
+        </div>
+        <div class='example'>
+            <p>[{</p>
+            <p>
+                term: 'dog',
+            </p>
+            <p>
+                when: '2016-09-12T18:14:43.160Z'
+            </p>
+            <p>}]</p>
+        </div>
+    </body>
+</html>
