@@ -12,11 +12,25 @@ app.get('/:query', function(req, res) {
     var query = req.params.query
     
     // use request for get request to google server.
-    var url = 'https://www.googleapis.com/customsearch/v1?key=' + APIKey + '&cx=' + CX + '&q=' + query
+    var url = 'https://www.googleapis.com/customsearch/v1?searchType=image&key=' + APIKey + '&cx=' + CX + '&q=' + query
     
     request(url, function(err, response, body) {
         if (err) throw err
-        res.send(body)
+        
+        var items = JSON.parse(body).items
+        var results = []
+        
+        items.forEach(function(item) {
+            var result = {
+                url: item.link,
+                snippet: item.snippet,
+                thumbnail: item.image.thumbnailLink,
+                context: item.image.contextLink
+            }
+            results.push(result)
+        })
+        
+        res.json(results)
     })
     
 })
