@@ -9,6 +9,14 @@ var db
 
 app.use(express.static(path.join(__dirname, 'static')))
 
+app.get('/latest', function(req, res) {
+    // return ten most recent using find query.
+    db.collection('queries').find({}, {_id: 0}).sort({when: -1}).limit(10).toArray(function(err, docs) {
+        if (err) throw err
+        res.json(docs)
+    })
+})
+
 app.get('/:query', function(req, res) {
     // use google api to search with given query.
     // need api key etc, read google documentation.
@@ -59,9 +67,7 @@ app.get('/:query', function(req, res) {
     })
 })
 
-app.get('/latest', function(req, res) {
-    // return ten most recent using find query.
-})
+
 
 var dbUrl = 'mongodb://' + process.env.IP + ':27017/querydb'
 
