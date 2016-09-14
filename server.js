@@ -23,7 +23,7 @@ app.get('/:query', function(req, res) {
         console.log(url)
         var bodyParsed = JSON.parse(body)
         
-        if (response.statusCode == 403) res.send('limit reached')
+        if (response.statusCode == 403) res.send('free query limit reached')
         
         if (response.statusCode == 200) {
             var items = JSON.parse(body).items
