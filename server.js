@@ -1,8 +1,10 @@
 var express = require('express')
 var request = require('request')
+var mongodb = require('mongodb').MongoClient
 var APIKey = 'AIzaSyAHFb4ozKgoWHio22rppfZeC9yUhGLHnuc'
 var CX = '014771138082796526328:bxbjznwjq-m'
 var app = express()
+var db
 
 app.use(express.static('static'))
 
@@ -20,12 +22,12 @@ app.get('/:query', function(req, res) {
     
     request(url, function(err, response, body) {
         if (err) throw err
-        console.log(url)
-        var bodyParsed = JSON.parse(body)
         
         if (response.statusCode == 403) res.send('free query limit reached')
         
         if (response.statusCode == 200) {
+            // add query to database here.
+            // req.params.query and current time.
             var items = JSON.parse(body).items
             console.log(items)
             var results = []
@@ -46,9 +48,15 @@ app.get('/:query', function(req, res) {
 })
 
 app.get('/latest', function(req, res) {
-    // store search in a database, return ten most recent.
+    // return ten most recent using find query.
 })
 
-app.listen(8080, function() {
-    console.log('App is listening on port 8080')
+var dbUrl = 'mongodb://' + process.env.IP + ':27017/querydb'
+
+mongodb.connect(dbUrl, function(err, dbConn) {
+    if (err) throw err
+    db = dbConn
+    var server = app.listen(process.env.PORT || 8080, function() {
+        console.log('App is listening on port ' + server.address().port)
+    })
 })

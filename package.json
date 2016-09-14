@@ -21,6 +21,7 @@
   "homepage": "https://github.com/impomales/Image_Search#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "mongodb": "^2.2.9",
     "request": "^2.74.0"
   }
 }
