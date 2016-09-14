@@ -1,17 +1,22 @@
 var express = require('express')
 var request = require('request')
+var path = require('path')
 var mongodb = require('mongodb').MongoClient
 var APIKey = 'AIzaSyAHFb4ozKgoWHio22rppfZeC9yUhGLHnuc'
 var CX = '014771138082796526328:bxbjznwjq-m'
 var app = express()
 var db
 
-app.use(express.static('static'))
+app.use(express.static(path.join(__dirname, 'static')))
 
 app.get('/:query', function(req, res) {
     // use google api to search with given query.
     // need api key etc, read google documentation.
     var query = req.params.query
+    if (query == 'favicon.ico') {
+        res.end()
+        return
+    }
     
     // use request for get request to google server.
     var url = 'https://www.googleapis.com/customsearch/v1?searchType=image&key=' + APIKey + '&cx=' + CX + '&q=' + query
@@ -28,8 +33,15 @@ app.get('/:query', function(req, res) {
         if (response.statusCode == 200) {
             // add query to database here.
             // req.params.query and current time.
+            var latest = {
+                term: query, 
+                when: (new Date()).toString()
+            }
+            db.collection('queries').insertOne(latest, function(err, doc) {
+                if (err) throw err
+                console.log(doc.ops)
+            })
             var items = JSON.parse(body).items
-            console.log(items)
             var results = []
             
             items.forEach(function(item) {
