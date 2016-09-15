@@ -69,7 +69,8 @@ app.get('/:query', function(req, res) {
 
 
 
-var dbUrl = 'mongodb://' + process.env.IP + ':27017/querydb'
+//var dbUrl = 'mongodb://' + process.env.IP + ':27017/querydb'
+var dbUrl =  'mongodb://imp88:querydb@ds033046.mlab.com:33046/querydb'
 
 mongodb.connect(dbUrl, function(err, dbConn) {
     if (err) throw err
